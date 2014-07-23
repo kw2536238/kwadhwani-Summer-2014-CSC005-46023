@@ -26,14 +26,13 @@ int main(int argc, char** argv) {
     
     //The dealers card values
     short d;    //Index variable for the dealer
-    short x;
-    const short ct = 0;
+    const short ct = 0; //A count variable set equal to 0
     short dCdVal[10];    //The cardValue where the card will be randomized
     char dCdName[10]={0,0,0,0,0,0,0,0,0,0};    //The actual name of the card to be displayed at the end
     short dValue[10];    //The value of the respecting cards
     short dealVal = 0;  //The total value of the dealers cards
-    short numLoop = 1;
-    short fdAce = 0;
+    short numLoop = 1;  //The number of loops where the user hits (so that aces can be checked for)
+    short fdAce = 0;    //The number of aces found
     
     //The players card values
     short i;    //Index Variable for player
@@ -42,25 +41,25 @@ int main(int argc, char** argv) {
     char cdName[10]={0,0,0,0,0,0,0,0,0,0};     //The actual name of the card to be displayed. 
     short value[10];     //The value of the respecting card
     short playVal = 0;  //The total value of the users cards
-    string hit;
+    string hit;     //Whether or not the player would like to hit
 
-    short endLoop = 0;
-    short count = 0;
-    short wins = 0;
-    short losses = 0;
-    short draws = 0;
-    short nGames = 0;
-    float wPerc;
-    float lPerc;
-    float dPerc;
+    short count = 0;    //count variable
+    short wins = 0;     //total number of wins
+    short losses = 0;   //total number of losses
+    short draws = 0;    //total number of draws
+    short nGames = 0;   //total number of games played.
     
     
+    //Introduction
     cout << "Let's play some BlackJack!!\n";
     cout << "The goal of this game is to simply attain a number close to 21 \nwithout going over 21. ";
     cout << "Each card is valued by its number (a 3 card is \nworth 3 points) while face cards (King, Queen, Jack) are worth 10." <<endl;
     cout << "The Ace is worth either 1 or 11 points, which will be determined by \nthe program for you. In this program, the cards are represnted by \ntheir first letter (e.g. ten = t)." <<endl<<endl;
+    //User inputs how many games to play
     cout << "How many games would you like to play? ";
     cin >> nGames;
+    
+    //Loop the program for number of games
     do {
         short temp;
         temp = count+1;
@@ -213,7 +212,8 @@ int main(int argc, char** argv) {
             }
             i--;
         }
-  
+        
+        //To account for double aces in the initial hand
         if (value[0] == 11 && value[1] == 11){
             value[0] = 1;
         }
@@ -221,6 +221,7 @@ int main(int argc, char** argv) {
         playVal = value[0] + value[1];
         cout << "The total value of your cards is " << playVal <<endl;
         
+        //First player hit
         if (playVal < 21){
             cout << "Would you like to hit(Yes or no)?" ;
             cin >> hit;
@@ -244,6 +245,7 @@ int main(int argc, char** argv) {
             //Account for if the ace causes the total to be over 11.
             for(i=0; i<numLoop; i++){
                 if (playVal > 21 && value[i] == 11){
+                    value[i] = 1;
                     playVal -=10;
                     fdAce++;
                     cout << "Your ace has changed from an 11 to a 1."<<endl;
@@ -262,61 +264,80 @@ int main(int argc, char** argv) {
                 hit = "no";
             }
         }
-  
+        /*
+        x--;
         cout << "The dealer's cards were: " <<dCdName[0];
         while (x>=ct){
             cout << "-" << dCdName[x];
             x--;
         }
+         */
         
-        cout << " and the dealer's total was " << dealVal <<endl<<endl;
+        //Output the dealers total
+        cout << "The dealer's total was " << dealVal <<endl<<endl;
         
         //********************Compare the dealer and player values********************
         
+        //If player has 21
         if (playVal == 21 && dealVal != 21){
             cout << "Congratulations you got BlackJack! You win!";
             wins++;
         }
+        //If dealer has 21
         else if (dealVal == 21 && playVal != 21){
             cout << "The dealer got BlackJack! You lose!";
             losses++;
         }
+        //If dealer and player bust
         else if(dealVal > 21 && playVal > 21){
             cout << "You and the dealer bust! It is a draw";
             draws++;
         }
+        //If dealer bust
         else if (dealVal > 21){
             cout << "The dealer bust! You win!";
             wins++;
         }
+        //If player bust
         else if (playVal > 21){
             cout << "You bust! You lose!";
             losses++;
         }
+        //If player and dealer tie above 17
         else if(playVal == dealVal && playVal >=17){
             cout << "You and the dealer tied and were above 17! It is a draw!";
             draws++;
         }
+        //If player and dealer tie under 17 (Should never happen)
         else if (playVal == dealVal && playVal < 17){
             cout << "You and the dealer tied and were below 17! You lose!";
             losses++;
         }
+        //If player has a higher hand than dealer
         else if (playVal > dealVal){
             cout << "You have a larger number than the dealer! You win!";
             wins++;
         }
+        //If player has a lower hand than dealer
         else if (playVal < dealVal){
             cout << "You have a lower number than the dealer! You lose!";
             losses++;
         }
-    
+        
+        //reset initial values for next loop
         cout <<endl;
         d=1;
-        endLoop = 0;
         numLoop = 1;
         count ++;
     }while(nGames>count);
     
     cout << "\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ End " <<endl;
+    
+    //Output wins, losses, and draws
+    cout << "Your total number of wins was: " << wins <<endl;
+    cout << "Your total number of losses was: " <<losses <<endl;
+    cout << "Your total number of draws was: " << draws <<endl;
+    
+    //Exit Stage Right  
 }
 
