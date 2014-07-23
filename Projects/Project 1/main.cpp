@@ -26,6 +26,7 @@ int main(int argc, char** argv) {
     
     //The dealers card values
     short d;    //Index variable for the dealer
+    short x;    //Index variable for the dealer
     const short ct = 0; //A count variable set equal to 0
     short dCdVal[10];    //The cardValue where the card will be randomized
     char dCdName[10]={0,0,0,0,0,0,0,0,0,0};    //The actual name of the card to be displayed at the end
@@ -42,7 +43,8 @@ int main(int argc, char** argv) {
     short value[10];     //The value of the respecting card
     short playVal = 0;  //The total value of the users cards
     string hit;     //Whether or not the player would like to hit
-
+    
+    //General Variables
     short count = 0;    //count variable
     short wins = 0;     //total number of wins
     short losses = 0;   //total number of losses
@@ -124,6 +126,10 @@ int main(int argc, char** argv) {
             d--;
         }                
         
+        if (dValue[0] == 11 && dValue[1] == 11){
+            dValue[0] =1;
+        }
+        
         //Output one card (Because one of them is face down on the table )
         cout << "One of the dealer's cards is a " << dCdName[0] <<endl;
     
@@ -133,12 +139,13 @@ int main(int argc, char** argv) {
         //Account for if the dealer wants to hit again (he must do if his total is less than 17)
         d=1;
         x=1;
-        while(dealVal < 17 || dealVal == 22){
+        //Loop if total is below 17 or account for double aces (total will be 11)
+        while(dealVal < 17 ){
+            x++;
             cout << "The dealer hits a " << dCdName[x]<<endl;
             dealVal += dValue[x];
             numLoop++;
-            x++;
-            
+                   
             //Account for if the ace causes the total to be over 11.
             for(d=0; d<=numLoop; d++){
                 if (dealVal > 21 && dValue[d] == 11){
