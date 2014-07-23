@@ -6,9 +6,11 @@
  */
 
 //System libraries
-
+#include <cstdlib>
 #include <iostream>
-
+#include <ctime>
+#include <iomanip>
+#include <cmath>
 using namespace std;
 
 //User Defined Libraries
@@ -18,7 +20,6 @@ using namespace std;
 //Function Prototypes
 
 //Execution Begins Here
-
 int main(int argc, char** argv) 
 {
     
@@ -27,23 +28,16 @@ int main(int argc, char** argv)
     int ppp;     //Peas Per Pod
     int total;   // Total Number of Peas
     
-    //Enter in Values and Calculate Total Peas
-    cout << "Enter the number of peas in a pod: \n";
-    cin >> nop;
-    cout << "Enter the number of peas in a pod: \n";
-    cin >> ppp;
-    total = nop * ppp;
-   
-    //Output All Data!
-    cout << "If you have ";
-    cout << nop;
-    cout << " pea pods \n";
-    cout << "and ";
-    cout << ppp;
-    cout << " peas in each pod, then \n"; 
-    cout << "you have ";
-    cout << total;
-    cout << " peas in all the pods.\n";
+    char num1;
+    short n;
+    
+    num1 = 7;
+    
+    n = static_cast<short>(num1)-48;
+    
+    
+    
+    cout << n;
    
     return 0;
 }
