@@ -232,12 +232,15 @@ int main(int argc, char** argv) {
         if (playVal < 21){
             cout << "Would you like to hit(Yes or no)?" ;
             cin >> hit;
+        }   
+        else {
+            hit == "no";
         }
+        //reset the index variable, numLoop, and fdAce
+        numLoop = 2;
+        fdAce = 0;
         //Account for if the player would like to hit
         while(hit == "yes" || hit == "Yes"){
-            //reset the index variable, numLoop, and fdAce
-            numLoop = 2;
-            fdAce = 0;
             
             //Output pre-calculated value of the next card
             cout << "You drew a  " << cdName[f]<<endl;
